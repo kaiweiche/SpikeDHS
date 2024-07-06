@@ -45,7 +45,8 @@ class Cell(nn.Module):
         elif downup_sample == 1:
             self.scale = 2
 
-        self.cell_arch = torch.sort(self.cell_arch,dim=0)[0].to(torch.uint8)
+        self.cell_arch = self.cell_arch[torch.argsort(self.cell_arch[:,0])].to(torch.uint8) # fixbug
+                     
         for x in self.cell_arch:
             primitive = PRIMITIVES[x[1]]
             if x[0] in [0,2,5]:
